@@ -1,0 +1,28 @@
+{
+	"search":
+	[
+		"<a href",
+		"<h2>",
+		"</h2>",
+		"<pre><code>",
+		"</code></pre>",
+		"<blockquote>",
+		"<ul>",
+		"<ol>",
+		"<table>",
+		"</table>"
+	],
+	"replace":
+	[
+		"<a class=\"rs-link-default\" href",
+		"<h3 class=\"rs-title-content-sub\">",
+		"</h3>",
+		"<blockcode>",
+		"</blockcode>",
+		"<blockquote class=\"rs-quote-default\">",
+		"<ul class=\"rs-list-default\">",
+		"<ol class=\"rs-list-default\">",
+		"<div class=\"rs-wrapper-table\"><table class=\"rs-table-default\">",
+		"</table></div>"
+	]
+}
