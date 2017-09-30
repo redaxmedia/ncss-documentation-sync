@@ -11,7 +11,7 @@ install:
 - composer install
 
 script:
-- php sync.php
+- bin/sync
 
 notifications:
  email:

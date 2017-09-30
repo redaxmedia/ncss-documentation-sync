@@ -1,15 +1,16 @@
 <?php
-namespace Doc;
+namespace Sync;
 
 use cebe\markdown\GithubMarkdown as Markdown;
 use Redaxscript\Html;
 use Redaxscript\Language;
 use Redaxscript\Reader;
+use SplFileInfo;
 
 /**
  * parent class to parse the documentation
  *
- * @since 3.0.0
+ * @since 4.0.0
  *
  * @package Doc
  * @category Parser
@@ -29,7 +30,7 @@ class Parser
 	/**
 	 * constructor of the class
 	 *
-	 * @since 3.0.0
+	 * @since 4.0.0
 	 *
 	 * @param Language $language instance of the language class
 	 */
@@ -42,14 +43,14 @@ class Parser
 	/**
 	 * get the name
 	 *
-	 * @since 3.0.0
+	 * @since 4.0.0
 	 *
-	 * @param object $item
+	 * @param SplFileInfo $item
 	 *
 	 * @return string
 	 */
 
-	public function getName($item = null)
+	public function getName(SplFileInfo $item = null) : string
 	{
 		$basenameArray = $this->_getBasenameArray($item);
 		return ucwords(str_replace('-', ' ', $basenameArray[1]));
@@ -58,14 +59,14 @@ class Parser
 	/**
 	 * get the alias
 	 *
-	 * @since 3.0.0
+	 * @since 4.0.0
 	 *
-	 * @param object $item
+	 * @param SplFileInfo $item
 	 *
 	 * @return string
 	 */
 
-	public function getAlias($item = null)
+	public function getAlias(SplFileInfo $item = null) : string
 	{
 		$basenameArray = $this->_getBasenameArray($item);
 		return $basenameArray[1];
@@ -74,14 +75,14 @@ class Parser
 	/**
 	 * get the rank
 	 *
-	 * @since 3.0.0
+	 * @since 4.0.0
 	 *
-	 * @param object $item
+	 * @param SplFileInfo $item
 	 *
-	 * @return integer
+	 * @return int
 	 */
 
-	public function getRank($item = null)
+	public function getRank(SplFileInfo $item = null) : int
 	{
 		$basenameArray = $this->_getBasenameArray($item);
 		return intval($basenameArray[0]);
@@ -90,14 +91,14 @@ class Parser
 	/**
 	 * get the parent
 	 *
-	 * @since 3.0.0
+	 * @since 4.0.0
 	 *
-	 * @param object $item
+	 * @param SplFileInfo $item
 	 *
 	 * @return string
 	 */
 
-	public function getParent($item = null)
+	public function getParent(SplFileInfo $item = null) : string
 	{
 		$path = $item->getPathname();
 		return trim(strrchr(dirname($path), '/'), '/');
@@ -106,14 +107,14 @@ class Parser
 	/**
 	 * get the content
 	 *
-	 * @since 3.0.0
+	 * @since 4.0.0
 	 *
-	 * @param object $item
+	 * @param SplFileInfo $item
 	 *
 	 * @return string
 	 */
 
-	public function getContent($item = null)
+	public function getContent(SplFileInfo $item = null) : string
 	{
 		$markdown = new Markdown();
 		$path = $item->getPathname();
@@ -124,16 +125,31 @@ class Parser
 	}
 
 	/**
+	 * get the basename array
+	 *
+	 * @since 4.0.0
+	 *
+	 * @param SplFileInfo $item
+	 *
+	 * @return array
+	 */
+
+	protected function _getBasenameArray(SplFileInfo $item = null) : array
+	{
+		return explode('.', $item->getBasename());
+	}
+
+	/**
 	 * tidy the content
 	 *
-	 * @since 3.0.0
+	 * @since 4.0.0
 	 *
 	 * @param string $content
 	 *
 	 * @return string
 	 */
 
-	protected function _tidyContent($content = null)
+	protected function _tidyContent($content = null) : string
 	{
 		$reader = new Reader();
 		$tidyArray = $reader->loadJSON('tidy.json', true)->getArray();
@@ -144,47 +160,31 @@ class Parser
 	/**
 	 * render the link
 	 *
-	 * @since 3.0.0
+	 * @since 4.0.0
 	 *
 	 * @param string $path
 	 *
 	 * @return string
 	 */
 
-	protected function _renderLink($path = null)
+	protected function _renderLink($path = null) : string
 	{
-		$href = str_replace('vendor/redaxmedia/ncss-documentation', 'https://github.com/redaxmedia/ncss-documentation/edit/master', $path);
+		$href = str_replace('vendor' . DIRECTORY_SEPARATOR . 'redaxmedia' . DIRECTORY_SEPARATOR . 'ncss-documentation', 'https://github.com/redaxmedia/ncss-documentation/edit/master', $path);
 
 		/* html elements */
 
 		$linkElement = new Html\Element();
-		$linkElement
-			->init('a',
-			[
-				'class' => 'rs-link-documentation',
-				'href' => $href,
-				'target' => '_blank'
-			])
-			->text($this->_language->get('edit_github'));
+		$linkElement->init('a',
+		[
+			'class' => 'rs-link-documentation',
+			'href' => $href,
+			'target' => '_blank'
+		])
+		->text($this->_language->get('edit_github'));
 
 		/* collect output */
 
 		$output = $linkElement;
 		return $output;
-	}
-
-	/**
-	 * get the basename array
-	 *
-	 * @since 3.0.0
-	 *
-	 * @param object $item
-	 *
-	 * @return array
-	 */
-
-	protected function _getBasenameArray($item = null)
-	{
-		return explode('.', $item->getBasename());
 	}
 }

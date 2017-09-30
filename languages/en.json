@@ -1,5 +1,6 @@
 {
 	"edit_github": "Edit on GitHub",
+	"database_failed": "Connection to database failed",
 	"point": ".",
 	"comma": ",",
 	"colon": ":",
