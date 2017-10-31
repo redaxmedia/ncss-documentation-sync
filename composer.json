@@ -19,13 +19,13 @@
 	{
 		"cebe/markdown": "1.1.2",
 		"redaxmedia/ncss-documentation": "dev-master",
-		"redaxmedia/redaxscript": "dev-master"
+		"redaxscript/redaxscript": "dev-master"
 	},
 	"scripts":
 	{
 		"post-install-cmd":
 		[
-			"cd vendor/redaxmedia/redaxscript && composer install"
+			"cd vendor/redaxscript/redaxscript && composer install"
 		],
 		"post-update-cmd":
 		[
