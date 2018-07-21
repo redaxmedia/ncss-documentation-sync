@@ -17,7 +17,7 @@
 	},
 	"require-dev":
 	{
-		"cebe/markdown": "1.1.2",
+		"cebe/markdown": "1.2.1",
 		"redaxmedia/ncss-documentation": "dev-master",
 		"redaxmedia/php-coding-standard": "1.0.0",
 		"redaxscript/redaxscript": "dev-master",
