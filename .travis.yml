@@ -1,13 +1,11 @@
 language: php
 
-php:
-- 7.2
+php: 7.2
 
 before_install:
 - composer global require hirak/prestissimo
 
 install:
-- composer self-update
 - composer install
 
 before_script:
