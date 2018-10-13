@@ -85,7 +85,7 @@ class Parser
 	public function getRank(SplFileInfo $item = null) : int
 	{
 		$basenameArray = $this->_getBasenameArray($item);
-		return intval($basenameArray[0]);
+		return (int)$basenameArray[0];
 	}
 
 	/**
@@ -119,9 +119,7 @@ class Parser
 		$markdown = new Markdown();
 		$path = $item->getPathname();
 		$content = file_get_contents($path);
-		$output = $this->_tidyContent($markdown->parse($content));
-		$output .= $this->_renderLink($path);
-		return $output;
+		return $this->_tidyContent($markdown->parse($content)) . $this->_renderLink($path);
 	}
 
 	/**
@@ -152,9 +150,8 @@ class Parser
 	protected function _tidyContent($content = null) : string
 	{
 		$reader = new Reader();
-		$tidyArray = $reader->loadJSON('tidy.json', true)->getArray();
-		$output = str_replace($tidyArray['search'], $tidyArray['replace'], $content);
-		return $output;
+		$tidyArray = $reader->loadJSON('tidy.json')->getArray();
+		return str_replace($tidyArray['search'], $tidyArray['replace'], $content);
 	}
 
 	/**
@@ -174,13 +171,14 @@ class Parser
 		/* html elements */
 
 		$linkElement = new Html\Element();
-		$linkElement->init('a',
-		[
-			'class' => 'rs-link-documentation',
-			'href' => $href,
-			'target' => '_blank'
-		])
-		->text($this->_language->get('edit_github'));
+		$linkElement
+			->init('a',
+			[
+				'class' => 'rs-link-documentation',
+				'href' => $href,
+				'target' => '_blank'
+			])
+			->text($this->_language->get('edit_github'));
 
 		/* collect output */
 

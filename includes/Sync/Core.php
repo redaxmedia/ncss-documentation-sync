@@ -6,6 +6,7 @@ use Redaxscript\Dater;
 use Redaxscript\Db;
 use Redaxscript\Filesystem;
 use Redaxscript\Language;
+use Redaxscript\Model;
 
 /**
  * parent class for the core
@@ -74,23 +75,27 @@ class Core
 		$dater = new Dater();
 		$dater->init();
 		$now = $dater->getDateTime()->getTimeStamp();
+		$categoryModel = new Model\Category();
+		$articleModel = new Model\Article();
 		$parser = new Parser($this->_language);
 		$filesystem = new Filesystem\Filesystem();
 		$filesystem->init('vendor' . DIRECTORY_SEPARATOR . 'redaxmedia' . DIRECTORY_SEPARATOR . 'ncss-documentation' . DIRECTORY_SEPARATOR . 'documentation', true);
 		$filesystemInterator = $filesystem->getIterator();
 		$author = 'documentation-sync';
-		$categoryCounter = $parentId = 1000;
+		$categoryCounter = 1000;
+		$parentId = 1000;
 		$articleCounter = 1000;
 		$status = 0;
 
 		/* delete category and article */
 
-		Db::forTablePrefix('categories')->where('author', $author)->deleteMany();
-		Db::forTablePrefix('articles')->where('author', $author)->deleteMany();
+		$categoryModel->query()->where('author', $author)->deleteMany();
+		$articleModel->query()->where('author', $author)->deleteMany();
 
 		/* create category */
 
-		Db::forTablePrefix('categories')
+		$categoryModel
+			->query()
 			->create()
 			->set(
 			[
@@ -114,7 +119,8 @@ class Core
 
 			if ($value->isDir())
 			{
-				$createStatus = Db::forTablePrefix('categories')
+				$createStatus = $categoryModel
+					->query()
 					->create()
 					->set(
 					[
@@ -135,7 +141,8 @@ class Core
 			{
 				$parentAlias = $parser->getParent($value);
 				$articleText = $parser->getContent($value);
-				$createStatus = Db::forTablePrefix('articles')
+				$createStatus = $articleModel
+					->query()
 					->create()
 					->set(
 					[
@@ -167,7 +174,7 @@ class Core
 
 		/* auto increment */
 
-		$this->_setAutoIncrement(3000);
+		$this->_setAutoIncrement(2000);
 		return $status;
 	}
 
