@@ -1,12 +1,12 @@
 <?php
 namespace Sync;
 
+use Redaxscript\Admin;
 use Redaxscript\Config;
 use Redaxscript\Dater;
 use Redaxscript\Db;
 use Redaxscript\Filesystem;
 use Redaxscript\Language;
-use Redaxscript\Model;
 
 /**
  * parent class for the core
@@ -75,8 +75,8 @@ class Core
 		$dater = new Dater();
 		$dater->init();
 		$now = $dater->getDateTime()->getTimeStamp();
-		$categoryModel = new Model\Category();
-		$articleModel = new Model\Article();
+		$categoryModel = new Admin\Model\Category();
+		$articleModel = new Admin\Model\Article();
 		$parser = new Parser($this->_language);
 		$filesystem = new Filesystem\Filesystem();
 		$filesystem->init('vendor' . DIRECTORY_SEPARATOR . 'redaxmedia' . DIRECTORY_SEPARATOR . 'ncss-documentation' . DIRECTORY_SEPARATOR . 'documentation', true);
@@ -119,20 +119,16 @@ class Core
 
 			if ($value->isDir())
 			{
-				$createStatus = $categoryModel
-					->query()
-					->create()
-					->set(
-					[
-						'id' => ++$categoryCounter,
-						'title' => $title,
-						'alias' => $alias,
-						'author' => $author,
-						'rank' => $rank,
-						'parent' => $parentId,
-						'date' => $now
-					])
-					->save();
+				$createStatus = $categoryModel->createByArray(
+				[
+					'id' => ++$categoryCounter,
+					'title' => $title,
+					'alias' => $alias,
+					'author' => $author,
+					'rank' => $rank,
+					'parent' => $parentId,
+					'date' => $now
+				]);
 			}
 
 			/* else create article */
@@ -141,21 +137,17 @@ class Core
 			{
 				$parentAlias = $parser->getParent($value);
 				$articleText = $parser->getContent($value);
-				$createStatus = $articleModel
-					->query()
-					->create()
-					->set(
-					[
-						'id' => $articleCounter++,
-						'title' => $title,
-						'alias' => $alias . '-' . $articleCounter,
-						'author' => $author,
-						'text' => $articleText,
-						'rank' => $rank,
-						'category' => $parentAlias === 'documentation' ? $parentId : $categoryCounter,
-						'date' => $now
-					])
-					->save();
+				$createStatus = $articleModel->createByArray(
+				[
+					'id' => $articleCounter++,
+					'title' => $title,
+					'alias' => $alias . '-' . $articleCounter,
+					'author' => $author,
+					'text' => $articleText,
+					'rank' => $rank,
+					'category' => $parentAlias === 'documentation' ? $parentId : $categoryCounter,
+					'date' => $now
+				]);
 			}
 
 			/* handle status */

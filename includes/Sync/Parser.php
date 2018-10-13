@@ -171,7 +171,7 @@ class Parser
 		/* html elements */
 
 		$linkElement = new Html\Element();
-		$linkElement
+		return $linkElement
 			->init('a',
 			[
 				'class' => 'rs-link-documentation',
@@ -179,10 +179,5 @@ class Parser
 				'target' => '_blank'
 			])
 			->text($this->_language->get('edit_github'));
-
-		/* collect output */
-
-		$output = $linkElement;
-		return $output;
 	}
 }
