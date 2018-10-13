@@ -87,25 +87,21 @@ class Core
 		$articleCounter = 1000;
 		$status = 0;
 
-		/* delete category and article */
+		/* delete first */
 
 		$categoryModel->query()->where('author', $author)->deleteMany();
 		$articleModel->query()->where('author', $author)->deleteMany();
 
 		/* create category */
 
-		$categoryModel
-			->query()
-			->create()
-			->set(
-			[
-				'id' => $categoryCounter,
-				'title' => 'Documentation',
-				'alias' => 'documentation',
-				'author' => $author,
-				'date' => $now
-			])
-			->save();
+		$categoryModel->createByArray(
+		[
+			'id' => $categoryCounter,
+			'title' => 'Documentation',
+			'alias' => 'documentation',
+			'author' => $author,
+			'date' => $now
+		]);
 
 		/* process filesystem */
 
