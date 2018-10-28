@@ -147,7 +147,7 @@ class Parser
 	 * @return string
 	 */
 
-	protected function _tidyContent($content = null) : string
+	protected function _tidyContent(string $content = null) : string
 	{
 		$reader = new Reader();
 		$tidyArray = $reader->loadJSON('tidy.json')->getArray();
@@ -164,7 +164,7 @@ class Parser
 	 * @return string
 	 */
 
-	protected function _renderLink($path = null) : string
+	protected function _renderLink(string $path = null) : string
 	{
 		$href = str_replace('vendor' . DIRECTORY_SEPARATOR . 'redaxmedia' . DIRECTORY_SEPARATOR . 'ncss-documentation', 'https://github.com/redaxmedia/ncss-documentation/edit/master', $path);
 
