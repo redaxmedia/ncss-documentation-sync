@@ -73,23 +73,7 @@ class Parser
 	}
 
 	/**
-	 * get the rank
-	 *
-	 * @since 4.0.0
-	 *
-	 * @param SplFileInfo $item
-	 *
-	 * @return int
-	 */
-
-	public function getRank(SplFileInfo $item = null) : int
-	{
-		$basenameArray = $this->_getBasenameArray($item);
-		return (int)$basenameArray[0];
-	}
-
-	/**
-	 * get the parent
+	 * get the parent alias
 	 *
 	 * @since 4.0.0
 	 *
@@ -98,7 +82,7 @@ class Parser
 	 * @return string
 	 */
 
-	public function getParent(SplFileInfo $item = null) : string
+	public function getParentAlias(SplFileInfo $item = null) : string
 	{
 		$path = $item->getPathname();
 		return trim(strrchr(dirname($path), '/'), '/');

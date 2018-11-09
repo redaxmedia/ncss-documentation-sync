@@ -6,6 +6,7 @@ use Redaxscript\Dater;
 use Redaxscript\Db;
 use Redaxscript\Filesystem;
 use Redaxscript\Language;
+use Symfony\Component\Finder\Iterator\SortableIterator as SymfonySortableIterator;
 
 /**
  * parent class for the core
@@ -69,7 +70,7 @@ class Core
 		$parser = new Parser($this->_language);
 		$filesystem = new Filesystem\Filesystem();
 		$filesystem->init('vendor' . DIRECTORY_SEPARATOR . 'redaxmedia' . DIRECTORY_SEPARATOR . 'ncss-documentation' . DIRECTORY_SEPARATOR . 'documentation', true);
-		$filesystemInterator = $filesystem->getIterator();
+		$filesystemObject = new SymfonySortableIterator($filesystem->getIterator(), 1);
 		$author = 'documentation-sync';
 		$categoryCounter = 1000;
 		$parentId = 1000;
@@ -89,16 +90,16 @@ class Core
 			'title' => 'Documentation',
 			'alias' => 'documentation',
 			'author' => $author,
+			'rank' => $categoryCounter,
 			'date' => $now
 		]);
 
 		/* process filesystem */
 
-		foreach ($filesystemInterator as $key => $value)
+		foreach ($filesystemObject as $value)
 		{
 			$title = $parser->getName($value);
 			$alias = $parser->getAlias($value);
-			$rank = $parser->getRank($value);
 
 			/* create category */
 
@@ -110,7 +111,7 @@ class Core
 					'title' => $title,
 					'alias' => $alias,
 					'author' => $author,
-					'rank' => $rank,
+					'rank' => $categoryCounter,
 					'parent' => $parentId,
 					'date' => $now
 				]);
@@ -120,16 +121,16 @@ class Core
 
 			else
 			{
-				$parentAlias = $parser->getParent($value);
+				$parentAlias = $parser->getParentAlias($value);
 				$articleText = $parser->getContent($value);
 				$createStatus = $articleModel->createByArray(
 				[
-					'id' => $articleCounter++,
+					'id' => ++$articleCounter,
 					'title' => $title,
 					'alias' => $alias . '-' . $articleCounter,
 					'author' => $author,
 					'text' => $articleText,
-					'rank' => $rank,
+					'rank' => $articleCounter,
 					'category' => $parentAlias === 'documentation' ? $parentId : $categoryCounter,
 					'date' => $now
 				]);

@@ -11,6 +11,7 @@ error_reporting(E_ERROR | E_PARSE);
 /* include */
 
 include_once('vendor' . DIRECTORY_SEPARATOR . 'redaxscript' . DIRECTORY_SEPARATOR . 'redaxscript' . DIRECTORY_SEPARATOR . 'includes' . DIRECTORY_SEPARATOR . 'Autoloader.php');
+include_once('.' . DIRECTORY_SEPARATOR . 'vendor' . DIRECTORY_SEPARATOR . 'autoload.php');
 
 /* autoload */
 
@@ -19,7 +20,6 @@ $autoloader->init(
 [
 	'Sync' => 'includes' . DIRECTORY_SEPARATOR . 'Sync',
 	'Redaxscript' => 'vendor' . DIRECTORY_SEPARATOR . 'redaxscript' . DIRECTORY_SEPARATOR . 'redaxscript' . DIRECTORY_SEPARATOR . 'includes',
-	'cebe\markdown' => 'vendor' . DIRECTORY_SEPARATOR . 'cebe' . DIRECTORY_SEPARATOR . 'markdown',
 	'vendor' . DIRECTORY_SEPARATOR . 'redaxscript' . DIRECTORY_SEPARATOR . 'redaxscript' . DIRECTORY_SEPARATOR . 'libraries'
 ]);
 

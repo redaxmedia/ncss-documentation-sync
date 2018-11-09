@@ -21,7 +21,8 @@
 		"redaxmedia/ncss-documentation": "dev-master",
 		"redaxmedia/php-coding-standard": "1.2.1",
 		"redaxscript/redaxscript": "dev-master",
-		"squizlabs/php_codesniffer": "3.3.2"
+		"squizlabs/php_codesniffer": "3.3.2",
+		"symfony/finder": "4.1.7"
 	},
 	"scripts":
 	{
