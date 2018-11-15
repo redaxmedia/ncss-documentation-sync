@@ -6,6 +6,13 @@ use Redaxscript\Html;
 use Redaxscript\Language;
 use Redaxscript\Reader;
 use SplFileInfo;
+use function dirname;
+use function explode;
+use function file_get_contents;
+use function str_replace;
+use function strrchr;
+use function trim;
+use function ucwords;
 
 /**
  * parent class to parse the documentation
