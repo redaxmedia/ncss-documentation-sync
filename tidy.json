@@ -1,7 +1,6 @@
 {
 	"search":
 	[
-		"<a href",
 		"<h2>",
 		"</h2>",
 		"<pre><code class=\"language-",
@@ -9,14 +8,11 @@
 		"</code></pre>",
 		"<blockquote><p>",
 		"</p>\n</blockquote>",
-		"<ul>",
-		"<ol>",
 		"<table>",
 		"</table>"
 	],
 	"replace":
 	[
-		"<a class=\"rs-link-default\" href",
 		"<h3 class=\"rs-title-content-sub\">",
 		"</h3>",
 		"<pre class=\"rs-js-code rs-code-default ",
@@ -24,8 +20,6 @@
 		"</pre>",
 		"<blockquote class=\"rs-quote-default\">",
 		"</blockquote>",
-		"<ul class=\"rs-list-default\">",
-		"<ol class=\"rs-list-default\">",
 		"<div class=\"rs-wrapper-table\"><table class=\"rs-table-default\">",
 		"</table></div>"
 	]
