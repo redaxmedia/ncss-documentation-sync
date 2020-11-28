@@ -23,4 +23,4 @@ jobs:
     uses: shivammathur/setup-php@2.7.0
     with:
      php-version: 7.4
-  - run: bin sync
+  - run: bin/sync
