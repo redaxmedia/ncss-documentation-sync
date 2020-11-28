@@ -24,3 +24,5 @@ jobs:
     with:
      php-version: 7.4
   - run: bin/sync
+    env:
+     DB_URL: ${{ secrets.DB_URL }}
