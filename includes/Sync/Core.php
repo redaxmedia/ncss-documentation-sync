@@ -49,7 +49,7 @@ class Core
 
 	public function run() : void
 	{
-		Db::getStatus() === 2 ? exit($this->_process()) : exit($this->_language->get('database_failed') . PHP_EOL);
+		Db::getStatus() === 2 ? exit($this->_process()) : exit(1);
 	}
 
 	/**
