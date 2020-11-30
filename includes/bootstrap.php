@@ -34,6 +34,8 @@ $config = Config::getInstance();
 $dbUrl = getenv('DB_URL');
 $config->parse($dbUrl);
 
+var_dump($dbUrl);
+
 /* database */
 
 Db::construct($config);
